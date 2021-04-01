@@ -4,7 +4,7 @@
 
 | Launcher screen  | Article list | Article Detail Screen |
 | ---------------- | ------------ |---------------------- |
-| ![Launcher screen](./resources/ss-01.png) | ![Article list](./resources/ss-02.png) | ![Article Detail Screen](./resources/ss-02.png) |
+| ![Launcher screen](./resources/ss-01.png) | ![Article list](./resources/ss-02.png) | ![Article Detail Screen](./resources/ss-03.png) |
 
 ### Launcher screen: 
 A splash screen with Viesure logo that appear while the application is launching.
