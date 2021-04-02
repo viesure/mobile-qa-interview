@@ -11,6 +11,12 @@ import java.util.List;
 
 public class ArticleListPageLocators {
 
+    @AndroidFindBy(id = "io.viesure.qa:id/action_bar_root")
+    List<WebElement> action_bar_root;
+
+    @AndroidFindBy(id = "android:id/content")
+    List<WebElement> content;
+
     @AndroidFindBy(xpath = "//android.view.ViewGroup/android.view.View/android.view.View")
     List<WebElement> articles;
 
