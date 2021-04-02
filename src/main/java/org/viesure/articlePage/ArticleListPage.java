@@ -1,6 +1,7 @@
 package org.viesure.articlePage;
 
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,7 +17,7 @@ public class ArticleListPage extends BasePage {
     private ArticleListPageLocators locators;
     private List<ArticleElement> visibleArticleList;
 
-    public ArticleListPage(AppiumDriver<?> driver){
+    public ArticleListPage(AndroidDriver<AndroidElement> driver){
         super(driver);
 
         locators = new ArticleListPageLocators(driver);
