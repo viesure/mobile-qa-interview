@@ -1,12 +1,13 @@
 package org.viesure;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -14,13 +15,36 @@ import java.net.URL;
 
 public class BaseTest {
 
-    AppiumDriver<?> driver;
+    protected static AndroidDriver<AndroidElement> driver;
+    private static AppiumDriverLocalService service;
+
+    File app = new File(System.getProperty("user.dir") + "/app/android/" + "qa-interview.apk");
 
     @BeforeClass
     public void beforeClass(){
 
-        File app = new File(System.getProperty("user.dir") + "/app/android/" + "qa-interview.apk");
+        //TODO: Move to selenium grid when tests are confident
+        service = AppiumDriverLocalService.buildDefaultService();
+        service.start();
+        if (service == null || !service.isRunning()) {
+            throw new AppiumServerHasNotBeenStartedLocallyException(
+                    "An appium server node is not started!");
+        }
 
+        initalizeAndroidDriver();
+    }
+
+    @AfterClass
+    public void afterClass(){
+        if (driver != null) {
+            driver.quit();
+        }
+        if (service != null) {
+            service.stop();
+        }
+    }
+
+    private void initalizeAndroidDriver(){
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.APP,app.getAbsolutePath());
         capabilities.setCapability("deviceName","Pixel XL API 30");
@@ -28,17 +52,11 @@ public class BaseTest {
         capabilities.setCapability("platformName","Android");
         capabilities.setCapability("appPackage","io.viesure.qa");
         capabilities.setCapability("appActivity","io.viesure.qa.views.MainActivity");
-//        capabilities.setCapability("platformVersion","");
 
         try {
             driver = new AndroidDriver<>(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-    }
-
-    @AfterClass
-    public void afterClass(){
-        driver.quit();
     }
 }
