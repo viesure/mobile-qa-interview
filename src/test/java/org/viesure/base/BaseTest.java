@@ -19,7 +19,7 @@ import java.net.URL;
 @Listeners(TestListener.class)
 public class BaseTest {
 
-    private AndroidDriver<AndroidElement> driver;
+    protected AndroidDriver<AndroidElement> driver;
     private static AppiumDriverLocalService service;
 
     File app = new File(System.getProperty("user.dir") + "/app/android/" + "qa-interview.apk");
