@@ -1,6 +1,7 @@
 package org.viesure.tests;
 
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.viesure.articleDetailPage.ArticleDetailPage;
 import org.viesure.articlePage.ArticleListPage;
@@ -26,5 +27,10 @@ public class ArticleDetailTest extends BaseTest {
         detailPage.clickShareButton();
         navigateBack();
 
+    }
+
+    @Test(description = "This test is to fail",dependsOnMethods = "detailTest")
+    public void failTest(){
+        Assert.fail("I failed here intentionally");
     }
 }
