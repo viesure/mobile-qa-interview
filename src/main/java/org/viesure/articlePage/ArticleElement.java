@@ -36,7 +36,7 @@ public class ArticleElement {
         return element;
     }
 
-    @Step("Clicking on article: {title}")
+    @Step("Clicking on article")
     public void clickOnArticle(){
         this.element.click();
     }

@@ -24,7 +24,7 @@ public class ArticleListPage extends BasePage {
         locators = new ArticleListPageLocators(driver);
 
         waitUntilPageIsPopulated();
-        getVisibleArticles();
+        generateVisibleArticleList();
     }
 
     @Step("Getting list of currently visible articles")
@@ -33,13 +33,13 @@ public class ArticleListPage extends BasePage {
         return visibleArticleList;
     }
 
+    @Step("Waiting until List page is populated")
     private void waitUntilPageIsPopulated(){
         WebDriverWait wait = new WebDriverWait(this.driver, 10);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//android.view.ViewGroup/android.view.View/android.view.View"),1));
     }
 
     private void generateVisibleArticleList(){
-        //refreshing because if we scroll away, locators might changed
         visibleArticleList = new ArrayList<>();
         for (WebElement article: locators.articles){
             if (!article.getText().contains("Dummy articles")){
