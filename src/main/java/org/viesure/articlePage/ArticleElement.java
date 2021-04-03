@@ -1,5 +1,6 @@
 package org.viesure.articlePage;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 
 public class ArticleElement {
@@ -33,6 +34,11 @@ public class ArticleElement {
 
     public WebElement getElement() {
         return element;
+    }
+
+    @Step("Clicking on article: {title}")
+    public void clickOnArticle(){
+        this.element.click();
     }
 
     @Override
