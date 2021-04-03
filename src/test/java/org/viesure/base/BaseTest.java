@@ -9,11 +9,14 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+import org.viesure.Listeners.TestListener;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@Listeners(TestListener.class)
 public class BaseTest {
 
     protected static AndroidDriver<AndroidElement> driver;
