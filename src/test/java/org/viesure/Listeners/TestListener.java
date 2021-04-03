@@ -41,7 +41,7 @@ public class TestListener implements ITestListener {
         System.out.println("onTestFailure method for " +  getTestMethodName(result));
 
         Object testClass = result.getInstance();
-        WebDriver driver = ((BaseTest) testClass).driver;
+        WebDriver driver = ((BaseTest) testClass).getDriver();
 
         //Save screenshot to allure
         if (driver != null) {

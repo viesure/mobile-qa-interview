@@ -19,7 +19,7 @@ import java.net.URL;
 @Listeners(TestListener.class)
 public class BaseTest {
 
-    public AndroidDriver<AndroidElement> driver;
+    private AndroidDriver<AndroidElement> driver;
     private static AppiumDriverLocalService service;
 
     File app = new File(System.getProperty("user.dir") + "/app/android/" + "qa-interview.apk");
@@ -67,5 +67,9 @@ public class BaseTest {
     @Step("Navigating back using android system's back button")
     public void navigateBack(){
         driver.navigate().back();
+    }
+
+    public AndroidDriver<?> getDriver(){
+        return this.driver;
     }
 }
