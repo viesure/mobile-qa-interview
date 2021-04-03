@@ -2,6 +2,7 @@ package org.viesure.articlePage;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,6 +27,7 @@ public class ArticleListPage extends BasePage {
         getVisibleArticles();
     }
 
+    @Step("Getting list of currently visible articles")
     public List<ArticleElement> getVisibleArticles(){
         generateVisibleArticleList();
         return visibleArticleList;
