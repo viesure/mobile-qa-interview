@@ -7,7 +7,6 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 import org.viesure.base.BaseLocator;
 
-import java.util.List;
 
 public class ArticleDetailPageLocators extends BaseLocator {
 
@@ -37,10 +36,6 @@ public class ArticleDetailPageLocators extends BaseLocator {
 
     @AndroidFindBy(xpath = "//android.widget.ScrollView/android.view.View[4]")
     WebElement articleAuthor;
-
-    //Needed to check if exists
-    @AndroidFindBy(xpath = "//android.widget.ScrollView/android.view.View[4]")
-    List<WebElement> articleAuthorList;
 
     public ArticleDetailPageLocators(AndroidDriver<AndroidElement> driver){
         super(driver);
