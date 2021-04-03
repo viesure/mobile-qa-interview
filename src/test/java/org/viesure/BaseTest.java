@@ -5,6 +5,7 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
+import io.qameta.allure.Step;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -58,5 +59,10 @@ public class BaseTest {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Step("Navigating back using android system's back button")
+    public void navigateBack(){
+        driver.navigate().back();
     }
 }
