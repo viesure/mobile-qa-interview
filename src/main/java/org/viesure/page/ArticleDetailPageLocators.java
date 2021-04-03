@@ -1,11 +1,11 @@
-package org.viesure.articleDetailPage;
+package org.viesure.page.articleDetailPage;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
-import org.viesure.base.BaseLocator;
+import org.viesure.page.base.BaseLocator;
 
 
 public class ArticleDetailPageLocators extends BaseLocator {

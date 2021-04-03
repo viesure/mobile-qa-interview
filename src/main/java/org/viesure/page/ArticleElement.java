@@ -1,4 +1,4 @@
-package org.viesure.articlePage;
+package org.viesure.page.articlePage;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;

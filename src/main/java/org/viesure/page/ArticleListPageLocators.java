@@ -1,10 +1,10 @@
-package org.viesure.articlePage;
+package org.viesure.page.articlePage;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
-import org.viesure.base.BaseLocator;
+import org.viesure.page.base.BaseLocator;
 
 import java.util.List;
 

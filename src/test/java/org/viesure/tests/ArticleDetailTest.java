@@ -3,9 +3,9 @@ package org.viesure.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.viesure.articleDetailPage.ArticleDetailPage;
-import org.viesure.articlePage.ArticleListPage;
-import org.viesure.base.BaseTest;
+import org.viesure.page.articleDetailPage.ArticleDetailPage;
+import org.viesure.page.articlePage.ArticleListPage;
+import org.viesure.page.base.BaseTest;
 
 
 public class ArticleDetailTest extends BaseTest {
