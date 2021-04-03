@@ -1,4 +1,4 @@
-package org.viesure.page.articleDetailPage;
+package org.viesure.articleDetailPage;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
@@ -7,8 +7,7 @@ import io.appium.java_client.android.AndroidElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.viesure.page.ArticleDetailPageLocators;
-import org.viesure.page.base.BasePage;
+import org.viesure.base.BasePage;
 
 
 public class ArticleDetailPage extends BasePage {

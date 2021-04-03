@@ -1,4 +1,4 @@
-package org.viesure.page.base;
+package org.viesure.base;
 
 import io.appium.java_client.TouchAction;
 

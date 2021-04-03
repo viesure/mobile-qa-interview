@@ -2,9 +2,9 @@ package org.viesure.tests;
 
 
 import org.testng.annotations.Test;
-import org.viesure.page.articlePage.ArticleElement;
-import org.viesure.page.articlePage.ArticleListPage;
-import org.viesure.page.base.BaseTest;
+import org.viesure.articlePage.ArticleElement;
+import org.viesure.articlePage.ArticleListPage;
+import org.viesure.base.BaseTest;
 
 
 public class ArticleListTest extends BaseTest {
