@@ -9,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.viesure.articleDetailPage.ArticleDetailPage;
 import org.viesure.base.BaseTest;
-import org.viesure.base.Gestures;
+import org.viesure.utils.Gestures;
 import org.viesure.common.Article;
 import org.viesure.utils.Networking;
 

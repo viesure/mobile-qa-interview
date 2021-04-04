@@ -2,8 +2,8 @@ package org.viesure.tests;
 
 
 import org.testng.annotations.Test;
-import org.viesure.articlePage.ArticleElement;
-import org.viesure.articlePage.ArticleListPage;
+import org.viesure.articleListPage.ArticleElement;
+import org.viesure.articleListPage.ArticleListPage;
 import org.viesure.base.BaseTest;
 
 

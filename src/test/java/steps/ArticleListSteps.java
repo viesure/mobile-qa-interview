@@ -7,8 +7,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.qameta.allure.Step;
 import org.testng.Assert;
-import org.viesure.articlePage.ArticleElement;
-import org.viesure.articlePage.ArticleListPage;
+import org.viesure.articleListPage.ArticleElement;
+import org.viesure.articleListPage.ArticleListPage;
 import org.viesure.common.Article;
 import org.viesure.utils.Networking;
 

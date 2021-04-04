@@ -1,10 +1,9 @@
 package org.viesure.tests;
 
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.viesure.articleDetailPage.ArticleDetailPage;
-import org.viesure.articlePage.ArticleListPage;
+import org.viesure.articleListPage.ArticleListPage;
 import org.viesure.base.BaseTest;
 
 
