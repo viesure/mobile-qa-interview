@@ -5,6 +5,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.viesure.base.BasePage;
@@ -17,10 +18,9 @@ public class ArticleDetailPage extends BasePage {
     public ArticleDetailPage(AndroidDriver<AndroidElement> driver){
         super(driver);
 
-        locators = new ArticleDetailPageLocators(driver);
+        waitUntilPageLoaded();
 
-        WebDriverWait wait = new WebDriverWait(this.driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(locators.articleDescription));
+        locators = new ArticleDetailPageLocators(driver);
     }
 
     @Step("Clicking on top back button")
@@ -57,5 +57,11 @@ public class ArticleDetailPage extends BasePage {
         return element.getText();
     }
 
-
+    /**
+     * Waits until the description element is visible
+     */
+    private void waitUntilPageLoaded(){
+        WebDriverWait wait = new WebDriverWait(this.driver, 2);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.ScrollView/android.view.View[3]")));
+    }
 }
