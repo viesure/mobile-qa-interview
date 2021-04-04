@@ -5,6 +5,11 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
@@ -16,11 +21,13 @@ public class CommonSteps {
     private File app = new File(System.getProperty("user.dir") + "/app/android/" + "qa-interview.apk");
 
     @Before(order = 0)
+    @Step("Initalizing Android driver")
     public void setUp(){
         initalizeAndroidDriver();
     }
 
     @After(order = 1)
+    @Step("Quitting android driver")
     public void tearDown(){
         driver.quit();
     }
@@ -43,5 +50,20 @@ public class CommonSteps {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Step("Navigating back using android system's back button")
+    public void navigateBack(){
+        driver.navigate().back();
+    }
+
+    @Attachment(value = "Click to open issue screenshot", type = "image/png")
+    public byte[] saveScreenshotPNG (WebDriver driver) {
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Attachment(value = "{0}", type = "text/plain")
+    public static String saveTextLog (String message) {
+        return message;
     }
 }
