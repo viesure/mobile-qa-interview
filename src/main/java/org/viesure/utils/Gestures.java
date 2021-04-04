@@ -6,6 +6,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.Dimension;
 
 import java.time.Duration;
 
@@ -13,22 +14,34 @@ import java.time.Duration;
 public class Gestures {
 
     public static void scrollDown(AndroidDriver<AndroidElement> driver){
-        int width = driver.manage().window().getSize().width;
-        int height = driver.manage().window().getSize().height;
+        //The viewing size of the device
+        Dimension size = driver.manage().window().getSize();
 
-        (new TouchAction<>(driver)).press(PointOption.point(width/2,height/2))
-                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
-                .moveTo(PointOption.point(width/2,100))
-                .release().perform();
+        //x position set to mid-screen horizontally
+        int width = size.width / 2;
 
+        //Starting y location set to 80% of the height (near bottom)
+        int startPoint = (int) (size.getHeight() * 0.80);
+
+        //Ending y location set to 20% of the height (near top)
+        int endPoint = (int) (size.getHeight() * 0.20);
+
+        (new TouchAction<>(driver)).press(PointOption.point(width, startPoint)).waitAction(WaitOptions.waitOptions(Duration.ofMillis(2000))).moveTo(PointOption.point(width, endPoint)).release().perform();
     }
 
     public static void scrollUp(AndroidDriver<AndroidElement> driver){
-        int width = driver.manage().window().getSize().width;
-        int height = driver.manage().window().getSize().height;
-        (new TouchAction<>(driver)).press(PointOption.point(width/2,height/2))
-                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
-                .moveTo(PointOption.point(width/2,height-100))
-                .release().perform();
+        //The viewing size of the device
+        Dimension size = driver.manage().window().getSize();
+
+        //x position set to mid-screen horizontally
+        int width = size.width / 2;
+
+        //Ending y location set to 80% of the height (near bottom)
+        int endPoint = (int) (size.getHeight() * 0.80);
+
+        //Starting y location set to 20% of the height (near top)
+        int startPoint = (int) (size.getHeight() * 0.20);
+
+        (new TouchAction<>(driver)).press(PointOption.point(width, startPoint)).waitAction(WaitOptions.waitOptions(Duration.ofMillis(2000))).moveTo(PointOption.point(width, endPoint)).release().perform();
     }
 }
