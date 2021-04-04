@@ -3,7 +3,6 @@ package org.viesure.tests;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidElement;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -11,8 +10,8 @@ import org.testng.annotations.Test;
 import org.viesure.articleDetailPage.ArticleDetailPage;
 import org.viesure.base.BaseTest;
 import org.viesure.base.Gestures;
-import org.viesure.page.common.Article;
-import org.viesure.page.utils.Networking;
+import org.viesure.common.Article;
+import org.viesure.utils.Networking;
 
 import java.util.List;
 

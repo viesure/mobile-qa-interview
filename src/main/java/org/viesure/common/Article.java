@@ -1,4 +1,4 @@
-package org.viesure.page.common;
+package org.viesure.common;
 
 public class Article {
 

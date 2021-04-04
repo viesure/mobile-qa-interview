@@ -1,4 +1,4 @@
-package org.viesure.page.utils;
+package org.viesure.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -6,7 +6,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.viesure.page.common.Article;
+import org.viesure.common.Article;
 
 import java.util.ArrayList;
 import java.util.List;
