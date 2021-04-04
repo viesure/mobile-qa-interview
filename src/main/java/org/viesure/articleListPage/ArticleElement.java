@@ -3,7 +3,7 @@ package org.viesure.articleListPage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 
-public class ArticleElement {
+public class ArticleElement implements Comparable<ArticleElement>{
     String title;
     String author;
     String release_date;
@@ -50,5 +50,11 @@ public class ArticleElement {
         return "Title:\t" + this.title +
                 "\nAuthor:\t" + this.author +
                 "\nRelease Date:\t" + this.release_date;
+    }
+
+    @Override
+    public int compareTo(ArticleElement articleElement) {
+        //comparing the getText as it returns a concatenated string unique to the element
+        return this.element.getText().compareTo(articleElement.element.getText());
     }
 }
