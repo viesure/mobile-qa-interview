@@ -20,20 +20,11 @@ import java.net.URL;
 public class BaseTest {
 
     protected AndroidDriver<AndroidElement> driver;
-    private static AppiumDriverLocalService service;
 
     File app = new File(System.getProperty("user.dir") + "/app/android/" + "qa-interview.apk");
 
     @BeforeClass
     public void beforeClass(){
-
-        //TODO: Move to selenium grid when tests are confident
-        service = AppiumDriverLocalService.buildDefaultService();
-        service.start();
-        if (service == null || !service.isRunning()) {
-            throw new AppiumServerHasNotBeenStartedLocallyException(
-                    "An appium server node is not started!");
-        }
 
         initalizeAndroidDriver();
     }
@@ -42,9 +33,6 @@ public class BaseTest {
     public void afterClass(){
         if (driver != null) {
             driver.quit();
-        }
-        if (service != null) {
-            service.stop();
         }
     }
 
