@@ -29,8 +29,8 @@ public class ArticleDetailTest extends BaseTest {
 
     }
 
-    @Test(description = "This test is to fail",dependsOnMethods = "detailTest")
-    public void failTest(){
-        Assert.fail("I failed here intentionally");
-    }
+//    @Test(description = "This test is to fail",dependsOnMethods = "detailTest")
+//    public void failTest(){
+//        Assert.fail("I failed here intentionally");
+//    }
 }
