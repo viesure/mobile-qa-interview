@@ -24,6 +24,10 @@ public class ArticleElement {
         release_date = split[2].trim();
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public String getAuthor() {
         return author;
     }
