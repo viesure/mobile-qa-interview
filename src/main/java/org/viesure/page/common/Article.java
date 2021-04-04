@@ -32,4 +32,11 @@ public class Article {
     public String getImage() {
         return image;
     }
+
+    @Override
+    public String toString(){
+        return "Title:\t" + this.title +
+                "\nAuthor:\t" + this.author +
+                "\nRelease Date:\t" + this.release_date;
+    }
 }
