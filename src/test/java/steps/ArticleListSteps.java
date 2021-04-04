@@ -26,7 +26,6 @@ public class ArticleListSteps {
     @Given("user opens viesure application")
     @Step("user opens viesure application")
     public void user_opens_viesure_application() {
-//        initalizeAndroidDriver();
         articleListPage = new ArticleListPage(driver);
 
         articleListPage.getVisibleArticles();
