@@ -8,6 +8,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.viesure.articleListPage.ArticleListPage;
 import org.viesure.base.BasePage;
 
 
@@ -24,8 +25,9 @@ public class ArticleDetailPage extends BasePage {
     }
 
     @Step("Clicking on top back button")
-    public void clickBackButton(){
+    public ArticleListPage clickBackButton(){
         locators.backButton.click();
+        return new ArticleListPage(driver);
     }
 
     @Step("Clicking on share button")

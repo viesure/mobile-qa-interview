@@ -82,7 +82,7 @@ public class ArticleListPage extends BasePage {
         visibleArticleList = new ArrayList<>();
         for (WebElement article: locators.articles){
             if (!article.getText().contains("Dummy articles")){
-                this.visibleArticleList.add(new ArticleElement(article));
+                this.visibleArticleList.add(new ArticleElement(article, driver));
             }
         }
         return visibleArticleList;

@@ -2,11 +2,13 @@ package steps;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.qameta.allure.Step;
 import org.testng.Assert;
+import org.viesure.articleDetailPage.ArticleDetailPage;
 import org.viesure.articleListPage.ArticleElement;
 import org.viesure.articleListPage.ArticleListPage;
 import org.viesure.common.Article;
@@ -19,6 +21,8 @@ public class ArticleListSteps {
     private AndroidDriver<AndroidElement> driver;
     ArticleListPage articleListPage;
 
+    ArticleDetailPage selectedDetailPage;
+
     public ArticleListSteps(GlobalHooks globalHooks){
         this.driver = globalHooks.getDriver();
     }
@@ -29,15 +33,8 @@ public class ArticleListSteps {
         articleListPage = new ArticleListPage(driver);
 
         articleListPage.getVisibleArticles();
-
-        System.out.println("navigate to article list page");
     }
 
-    @When("the application loads a list of articles")
-    @Step("the application loads a list of articles")
-    public void the_application_loads_a_list_of_articles() {
-
-    }
 
     @Then("user can verify the visible articles")
     @Step("User can verify the visible articles")
@@ -73,9 +70,56 @@ public class ArticleListSteps {
         articleListPage.scrollUntilTopOfPage();
     }
 
-    @Then("user can see the articles")
-    @Step("user can see the articles")
-    public void userCanSeeTheArticles() {
+    @Then("user can see the articles list")
+    @Step("user can see the articles list")
+    public void userCanSeeTheArticlesList() {
         Assert.assertFalse(articleListPage.getVisibleArticles().isEmpty());
+    }
+
+
+
+    @When("user clicks on a visible article")
+    @Step("user clicks on a visible article")
+    public void userClicksOnAVisibleArticle() {
+        selectedDetailPage = articleListPage.getVisibleArticles().get(0).clickOnArticle();
+    }
+
+    @Then("article detail page opens")
+    @Step("article detail page opens")
+    public void articleDetailPageOpens() {
+        Assert.assertNotNull(selectedDetailPage);
+    }
+
+    @When("user clicks on the detail page back button")
+    @Step("user clicks on the detail page back button")
+    public void userClicksOnTheDetailPageBackButton() {
+        articleListPage= selectedDetailPage.clickBackButton();
+        selectedDetailPage=null;
+
+    }
+
+    @When("user clicks on the hardware back button")
+    @Step("user clicks on the hardware back button")
+    public void userClicksOnTheHardwareBackButton() {
+        driver.navigate().back();
+        articleListPage = new ArticleListPage(driver);
+        selectedDetailPage=null;
+    }
+
+    @When("user clicks on article with {string}")
+    @Step("user clicks on article with {string}")
+    public void userClicksOnArticleWith(String title) {
+        for (ArticleElement article: articleListPage.getVisibleArticles()){
+            if (article.getTitle().equals(title)){
+                selectedDetailPage = article.clickOnArticle();
+            }
+        }
+    }
+
+    @And("title of the page is the same as the clicked {string}")
+    @Step("title of the page is the same as the clicked {string}")
+    public void titleOfThePageIsTheSameAsTheClicked(String title) {
+        Assert.assertEquals(selectedDetailPage.getTitle(), title);
+        Assert.assertEquals(selectedDetailPage.getPageTitle(), title);
     }
 }

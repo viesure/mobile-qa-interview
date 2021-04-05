@@ -1,7 +1,10 @@
 package org.viesure.articleListPage;
 
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
+import org.viesure.articleDetailPage.ArticleDetailPage;
 
 public class ArticleElement implements Comparable<ArticleElement>{
     String title;
@@ -9,9 +12,11 @@ public class ArticleElement implements Comparable<ArticleElement>{
     String release_date;
 
     WebElement element;
+    AndroidDriver<AndroidElement> driver;
 
-    public ArticleElement(WebElement element){
+    public ArticleElement(WebElement element, AndroidDriver<AndroidElement> driver){
         this.element = element;
+        this.driver = driver;
 
         initProperties();
     }
@@ -41,8 +46,9 @@ public class ArticleElement implements Comparable<ArticleElement>{
     }
 
     @Step("Clicking on article")
-    public void clickOnArticle(){
+    public ArticleDetailPage clickOnArticle(){
         this.element.click();
+        return new ArticleDetailPage(driver);
     }
 
     @Override

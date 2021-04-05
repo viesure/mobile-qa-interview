@@ -49,10 +49,10 @@ public class GlobalHooks {
     public void initalizeAndroidDriver(){
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.APP,app.getAbsolutePath());
-//        capabilities.setCapability("deviceName","Pixel XL API 30");
-        capabilities.setCapability("deviceName","Nexus S API 24");
-//        capabilities.setCapability("udid","emulator-5554");
-        capabilities.setCapability("udid","emulator-5556");
+        capabilities.setCapability("deviceName","Pixel XL API 30");
+//        capabilities.setCapability("deviceName","Nexus S API 24");
+        capabilities.setCapability("udid","emulator-5554");
+//        capabilities.setCapability("udid","emulator-5556");
         capabilities.setCapability("platformName","Android");
         capabilities.setCapability("appPackage","io.viesure.qa");
         capabilities.setCapability("appActivity","io.viesure.qa.views.MainActivity");
