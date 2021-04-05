@@ -45,7 +45,6 @@ public class ArticleElement implements Comparable<ArticleElement>{
         return element;
     }
 
-    @Step("Clicking on article")
     public ArticleDetailPage clickOnArticle(){
         this.element.click();
         return new ArticleDetailPage(driver);

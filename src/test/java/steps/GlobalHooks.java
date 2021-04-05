@@ -12,6 +12,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.viesure.utils.AllureLogger;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -30,8 +31,8 @@ public class GlobalHooks {
     @AfterStep
     public void afterStep(Scenario scenario){
         if (scenario.isFailed()){
-            saveTextLog("Saved screenshot for failed step: " + scenario.getName());
-            saveScreenshotPNG();
+            AllureLogger.saveTextLog("Saved screenshot for failed step: " + scenario.getName());
+            AllureLogger.saveScreenshotPNG(driver);
 
         }
     }
@@ -70,13 +71,4 @@ public class GlobalHooks {
         driver.navigate().back();
     }
 
-    @Attachment(value = "Click to open issue screenshot", type = "image/png")
-    public byte[] saveScreenshotPNG () {
-        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
-    }
-
-    @Attachment(value = "{0}", type = "text/plain")
-    public static String saveTextLog (String message) {
-        return message;
-    }
 }
