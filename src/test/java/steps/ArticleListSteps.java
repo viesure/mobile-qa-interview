@@ -54,9 +54,28 @@ public class ArticleListSteps {
 
     @Step("Testing data on article")
     private void validateArticleData(ArticleElement actualArticle, Article expectedArticle){
-        System.out.println(actualArticle.getTitle());
+        System.out.println("Asserting\n" + actualArticle + "\nVS\n" + expectedArticle);
+
         Assert.assertEquals(actualArticle.getAuthor(), expectedArticle.getAuthor());
         Assert.assertEquals(actualArticle.getRelease_date(), expectedArticle.getRelease_date());
         Assert.assertEquals(actualArticle.getTitle(), expectedArticle.getTitle());
+    }
+
+    @When("user scrolls to the bottom")
+    @Step("user scrolls to the bottom")
+    public void userScrollsToTheBottom() {
+        articleListPage.scrollUntilBottomOfPage();
+    }
+
+    @When("user scrolls to the top")
+    @Step("user scrolls to the top")
+    public void userScrollsToTheTop() {
+        articleListPage.scrollUntilTopOfPage();
+    }
+
+    @Then("user can see the articles")
+    @Step("user can see the articles")
+    public void userCanSeeTheArticles() {
+        Assert.assertFalse(articleListPage.getVisibleArticles().isEmpty());
     }
 }
