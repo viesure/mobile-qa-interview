@@ -19,8 +19,8 @@ public class ArticleListSteps {
     private AndroidDriver<AndroidElement> driver;
     ArticleListPage articleListPage;
 
-    public ArticleListSteps(CommonSteps commonSteps){
-        this.driver = commonSteps.getDriver();
+    public ArticleListSteps(GlobalHooks globalHooks){
+        this.driver = globalHooks.getDriver();
     }
 
     @Given("user opens viesure application")
@@ -54,7 +54,7 @@ public class ArticleListSteps {
 
     @Step("Testing data on article")
     private void validateArticleData(ArticleElement actualArticle, Article expectedArticle){
-
+        System.out.println(actualArticle.getTitle());
         Assert.assertEquals(actualArticle.getAuthor(), expectedArticle.getAuthor());
         Assert.assertEquals(actualArticle.getRelease_date(), expectedArticle.getRelease_date());
         Assert.assertEquals(actualArticle.getTitle(), expectedArticle.getTitle());

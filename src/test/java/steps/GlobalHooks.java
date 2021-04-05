@@ -4,19 +4,20 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class CommonSteps {
+public class GlobalHooks {
     private AndroidDriver<AndroidElement> driver;
     private File app = new File(System.getProperty("user.dir") + "/app/android/" + "qa-interview.apk");
 
@@ -24,6 +25,15 @@ public class CommonSteps {
     @Step("Initalizing Android driver")
     public void setUp(){
         initalizeAndroidDriver();
+    }
+
+    @AfterStep
+    public void afterStep(Scenario scenario){
+        if (scenario.isFailed()){
+            saveTextLog("Saved screenshot for failed step: " + scenario.getName());
+            saveScreenshotPNG();
+
+        }
     }
 
     @After(order = 1)
@@ -58,7 +68,7 @@ public class CommonSteps {
     }
 
     @Attachment(value = "Click to open issue screenshot", type = "image/png")
-    public byte[] saveScreenshotPNG (WebDriver driver) {
+    public byte[] saveScreenshotPNG () {
         return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
     }
 
