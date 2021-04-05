@@ -59,6 +59,10 @@ public class ArticleDetailPage extends BasePage {
         return element.getText();
     }
 
+    public String getAuthorEmail(){
+        return getAuthor().replace("author: ", "");
+    }
+
     /**
      * Waits until the description element is visible
      */
