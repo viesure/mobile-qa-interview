@@ -12,19 +12,24 @@ import org.viesure.articleDetailPage.ArticleDetailPage;
 import org.viesure.articleListPage.ArticleElement;
 import org.viesure.articleListPage.ArticleListPage;
 import org.viesure.common.Article;
+import org.viesure.utils.AllureLogger;
+import org.viesure.utils.Gestures;
 import org.viesure.utils.Networking;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleListSteps {
 
     private AndroidDriver<AndroidElement> driver;
+    private GlobalHooks globalHooks;
     ArticleListPage articleListPage;
 
     ArticleDetailPage selectedDetailPage;
 
     public ArticleListSteps(GlobalHooks globalHooks){
         this.driver = globalHooks.getDriver();
+        this.globalHooks = globalHooks;
     }
 
     @Given("user opens viesure application")
@@ -121,5 +126,32 @@ public class ArticleListSteps {
     public void titleOfThePageIsTheSameAsTheClicked(String title) {
         Assert.assertEquals(selectedDetailPage.getTitle(), title);
         Assert.assertEquals(selectedDetailPage.getPageTitle(), title);
+    }
+
+    @Then("user can click on every article")
+    public void userCanClickOnEveryArticle() {
+        List<Article> expectedList = Networking.getDummyData();
+        List<String> clickedArticleTitles= new ArrayList<>();
+        List<ArticleElement> currentArticles;
+
+        while (clickedArticleTitles.size() != expectedList.size())
+        {
+            currentArticles= articleListPage.getVisibleArticles();
+
+            for (ArticleElement article: currentArticles){
+                if (!clickedArticleTitles.contains(article.getTitle())){
+                    AllureLogger.saveTextLog("Clicking on: " + article.getTitle());
+                    ArticleDetailPage detailPage = article.clickOnArticle();
+                    detailPage.clickBackButton();
+
+                    clickedArticleTitles.add(article.getTitle());
+                }
+            }
+            if (clickedArticleTitles.size() != expectedList.size()){
+                Gestures.scrollDown(driver);
+            }
+        }
+
+        System.out.println("Size at the end: " +clickedArticleTitles.size());
     }
 }

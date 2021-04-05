@@ -42,5 +42,9 @@ Feature: Article list page scenarios
       | Focused mobile alliance     |
       | Realigned multimedia framework|
 
+  @regression @slow
+  Scenario: Possibe to click on every article element in the list
+    Then user can click on every article
+
 #  Scenario: All list items are clickable
 #    Then user can click on every list item
