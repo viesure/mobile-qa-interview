@@ -11,8 +11,4 @@ import org.testng.annotations.BeforeClass;
 )
 public class SlowTestRunner extends AbstractTestNGCucumberTests {
 
-    @BeforeClass
-    public void beforeRunnerTest(){
-        System.out.println("Test runner before class");
-    }
 }
