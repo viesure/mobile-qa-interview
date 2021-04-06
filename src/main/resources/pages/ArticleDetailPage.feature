@@ -19,7 +19,7 @@ Feature: Article Detail page features
       | Focused mobile alliance     |
       | Realigned multimedia framework|
 
-    @regression
+    @regression @gmailLoggedIn
     Scenario: Sharing the article fills the recipient and address fields in the gmail application
     When user clicks on a visible article
     Then article detail page opens

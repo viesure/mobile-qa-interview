@@ -7,6 +7,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.viesure.articleDetailPage.ArticleDetailPage;
 import org.viesure.articleListPage.ArticleElement;
@@ -18,6 +22,7 @@ import org.viesure.utils.Networking;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ArticleListSteps {
 
@@ -49,19 +54,19 @@ public class ArticleListSteps {
         List<ArticleElement> actualVisibleArticles = articleListPage.getVisibleArticles();
 
         for (int i=0; i< actualVisibleArticles.size(); i++){
-            validateArticleData(actualVisibleArticles.get(i), expectedArticles.get(i));
+            verifyArticleListItem(actualVisibleArticles.get(i), expectedArticles.get(i));
         }
 
     }
 
-    @Step("Testing data on article")
-    private void validateArticleData(ArticleElement actualArticle, Article expectedArticle){
-        System.out.println("Asserting\n" + actualArticle + "\nVS\n" + expectedArticle);
-
-        Assert.assertEquals(actualArticle.getAuthor(), expectedArticle.getAuthor());
-        Assert.assertEquals(actualArticle.getRelease_date(), expectedArticle.getRelease_date());
-        Assert.assertEquals(actualArticle.getTitle(), expectedArticle.getTitle());
-    }
+//    @Step("Testing data on article")
+//    private void validateArticleData(ArticleElement actualArticle, Article expectedArticle){
+//        System.out.println("Asserting\n" + actualArticle + "\nVS\n" + expectedArticle);
+//
+//        Assert.assertEquals(actualArticle.getAuthor(), expectedArticle.getAuthor());
+//        Assert.assertEquals(actualArticle.getRelease_date(), expectedArticle.getRelease_date());
+//        Assert.assertEquals(actualArticle.getTitle(), expectedArticle.getTitle());
+//    }
 
     @When("user scrolls to the bottom")
     @Step("user scrolls to the bottom")
@@ -136,7 +141,7 @@ public class ArticleListSteps {
 
         while (clickedArticleTitles.size() != expectedList.size())
         {
-            currentArticles= articleListPage.getVisibleArticles();
+            currentArticles = articleListPage.getVisibleArticles();
 
             for (ArticleElement article: currentArticles){
                 if (!clickedArticleTitles.contains(article.getTitle())){
@@ -153,4 +158,118 @@ public class ArticleListSteps {
         }
     }
 
+    @Then("every article and detail page information is correct")
+    @Step("every article and detail page information is correct")
+    public void everyArticleAndDetailPageInformationIsCorrect() {
+        List<Article> expectedList = Networking.getDummyData();
+        List<String> clickedArticleTitles= new ArrayList<>();
+        List<ArticleElement> currentArticles;
+
+        //Articles are supposed to be in the same order as coming from backend
+        //Index will be used to compare selected article with backend data
+        int articleIndex = 0;
+
+        while (clickedArticleTitles.size() != expectedList.size())
+        {
+            currentArticles = articleListPage.getVisibleArticles();
+
+            for (ArticleElement article: currentArticles){
+                if (!clickedArticleTitles.contains(article.getTitle())){
+                    AllureLogger.saveTextLog("Clicking on: " + article.getTitle());
+                    verifyArticleListItem(article, expectedList.get(articleIndex));
+
+                    ArticleDetailPage detailPage = article.clickOnArticle();
+                    verifyArticleDetail(detailPage, expectedList.get(articleIndex));
+                    detailPage.clickBackButton();
+
+                    clickedArticleTitles.add(article.getTitle());
+                    //Incrementing article index after adding it to clicked article lsit
+                    articleIndex++;
+                }
+            }
+            if (clickedArticleTitles.size() != expectedList.size()){
+                Gestures.scrollDown(driver);
+            }
+        }
+    }
+
+    @Then("every shared article fills mail correctly")
+    public void everySharedArticleFillsMailCorrectly() {
+        List<Article> expectedList = Networking.getDummyData();
+        List<String> clickedArticleTitles= new ArrayList<>();
+        List<ArticleElement> currentArticles;
+
+        //Articles are supposed to be in the same order as coming from backend
+        //Index will be used to compare selected article with backend data
+        int articleIndex = 0;
+
+        while (clickedArticleTitles.size() != expectedList.size())
+        {
+            currentArticles = articleListPage.getVisibleArticles();
+
+            for (ArticleElement article: currentArticles){
+                if (!clickedArticleTitles.contains(article.getTitle())){
+                    AllureLogger.saveTextLog("Clicking on: " + article.getTitle());
+
+                    ArticleDetailPage detailPage = article.clickOnArticle();
+                    detailPage.clickShareButton();
+
+                    verifyMailData(expectedList.get(articleIndex));
+
+                    detailPage.clickBackButton();
+
+                    clickedArticleTitles.add(article.getTitle());
+                    //Incrementing article index after adding it to clicked article lsit
+                    articleIndex++;
+                }
+            }
+            if (clickedArticleTitles.size() != expectedList.size()){
+                Gestures.scrollDown(driver);
+            }
+        }
+    }
+
+    @Step("Verifying article list item content")
+    private void verifyArticleListItem(ArticleElement actualArticle, Article expectedArticle){
+        Assert.assertEquals(actualArticle.getTitle(), expectedArticle.getTitle(),"Testing if title is correct");
+        Assert.assertEquals(actualArticle.getRelease_date(), expectedArticle.getRelease_date(),"Testing if release date is correct");
+        Assert.assertEquals(actualArticle.getAuthorEmail(), expectedArticle.getAuthor(),"Testing if author is correct");
+    }
+
+    @Step("Verifying article detail content")
+    private void verifyArticleDetail(ArticleDetailPage detailPage, Article expectedArticle){
+        Assert.assertEquals(detailPage.getPageTitle(), expectedArticle.getTitle(),"Testing if page title is correct");
+        Assert.assertEquals(detailPage.getTitle(), expectedArticle.getTitle(),"Testing if title is correct");
+        Assert.assertEquals(detailPage.getCreatedTime(), expectedArticle.getRelease_date(),"Testing if release date is correct");
+        Assert.assertEquals(detailPage.getDescription(), expectedArticle.getDescription(),"Testing if description is correct");
+        Assert.assertEquals(detailPage.getAuthorEmail(), expectedArticle.getAuthor(),"Testing if author is correct");
+    }
+
+    @Step("Verifying filled email data")
+    private void verifyMailData(Article expectedArticle){
+        System.out.println("Testing app activity and gmail fill data");
+        Assert.assertEquals(driver.currentActivity(), ".ComposeActivityGmailExternal", "Current Activity is not compose activity --" + driver.currentActivity());
+
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement recipient = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/to")));
+        WebElement subject = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/subject")));
+        WebElement body = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/wc_body_layout")));
+
+        //removing "author: " here as it can be needed on other places
+        String expectedRecipientText = "<" + expectedArticle.getAuthor() + ">, ";
+        Assert.assertEquals(recipient.getText(), expectedRecipientText, "Testing if actual recipient equals expected recipient");
+        Assert.assertEquals(subject.getText(), expectedArticle.getTitle(), "Testing if subject equals to the title of the article");
+        Assert.assertTrue(body.getText().isEmpty(), "Testing if email body is empty");
+
+//        Set<String> contextNames = driver.getContextHandles();
+//        String otherContext = (String) contextNames.toArray()[1];
+//
+//        driver.context((String) contextNames.toArray()[1]);
+//
+//        driver.closeApp();
+//        driver.context("NATIVE_APP");
+        //First one closes keyboard, second navigates back
+        driver.navigate().back();
+        driver.navigate().back();
+    }
 }

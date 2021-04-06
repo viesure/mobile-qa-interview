@@ -25,7 +25,7 @@ public class ArticleElement implements Comparable<ArticleElement>{
         String elementText= element.getText();
         String[] split = elementText.split(",");
         title = split[0].trim();
-        author = split[1].replace("author:","").trim();
+        author = split[1];
         release_date = split[2].trim();
     }
 
@@ -35,6 +35,10 @@ public class ArticleElement implements Comparable<ArticleElement>{
 
     public String getAuthor() {
         return author;
+    }
+
+    public String getAuthorEmail() {
+        return author.replace("author:","").trim();
     }
 
     public String getRelease_date() {

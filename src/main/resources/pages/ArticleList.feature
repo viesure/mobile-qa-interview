@@ -46,5 +46,13 @@ Feature: Article list page scenarios
   Scenario: Possibe to click on every article element in the list
     Then user can click on every article
 
+  @regression @slow
+  Scenario: Every article, and detail shows the same information as it comes from the backend
+    Then every article and detail page information is correct
+
+  @regression @slow @gmailLoggedIn
+  Scenario: Every shared article fills the recipient and subject correctly
+    Then every shared article fills mail correctly
+
 #  Scenario: All list items are clickable
 #    Then user can click on every list item

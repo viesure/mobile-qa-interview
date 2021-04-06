@@ -5,9 +5,10 @@
 
 
     <test name="basic test" thread-count="3">
+        <parameter name="device" value="pixel"/>
         <classes>
 
-            <class name="org.viesure.testRunner.ArticleTestRunner" />
+            <class name="org.viesure.testRunner.SlowTestRunner" />
 
         </classes>
     </test>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Viesure" thread-count="2" parallel="tests">
+
+
+    <test name="Article Test">
+        <parameter name="device" value="pixel"/>
+        <classes>
+            <class name="org.viesure.testRunner.ArticleTestRunner" />
+        </classes>
+    </test>
+
+    <test name="Showcase Test">
+        <parameter name="device" value="nexus"/>
+        <classes>
+            <class name="org.viesure.testRunner.ShowcaseTestRunner" />
+        </classes>
+    </test>
+
+</suite>

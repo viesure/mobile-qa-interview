@@ -123,6 +123,7 @@
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
+<!--                        <suiteXmlFile>paralellTestng.xml</suiteXmlFile>-->
                     </suiteXmlFiles>
                     <parallel>methods</parallel>
                     <useUnlimitedThreads>true</useUnlimitedThreads>
