@@ -151,7 +151,6 @@ public class ArticleListSteps {
                 Gestures.scrollDown(driver);
             }
         }
-
-        System.out.println("Size at the end: " +clickedArticleTitles.size());
     }
+
 }
