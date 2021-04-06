@@ -53,6 +53,8 @@ public class ArticleDetailSteps {
     @And("the recipient and subject fields are filled")
     @Step("the recipient and subject fields are filled")
     public void theRecipientAndSubjectFieldsAreFilled() {
+        Assert.assertEquals(driver.currentActivity(), ".ComposeActivityGmailExternal", "User is not in compose email activity.");
+
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement recipient = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/to")));
         WebElement subject = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/subject")));

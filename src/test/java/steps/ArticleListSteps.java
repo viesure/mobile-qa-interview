@@ -22,7 +22,6 @@ import org.viesure.utils.Networking;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class ArticleListSteps {
 
@@ -248,7 +247,7 @@ public class ArticleListSteps {
     @Step("Verifying filled email data")
     private void verifyMailData(Article expectedArticle){
         System.out.println("Testing app activity and gmail fill data");
-        Assert.assertEquals(driver.currentActivity(), ".ComposeActivityGmailExternal", "Current Activity is not compose activity --" + driver.currentActivity());
+        Assert.assertEquals(driver.currentActivity(), ".ComposeActivityGmailExternal", "Current Activity is not compose activity");
 
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement recipient = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/to")));

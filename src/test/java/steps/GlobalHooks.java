@@ -12,10 +12,12 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Reporter;
 import org.viesure.utils.AllureLogger;
+import org.viesure.utils.PropertyFileLoader;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 
 public class GlobalHooks {
     private File app = new File(System.getProperty("user.dir") + "/app/android/" + "qa-interview.apk");
@@ -34,7 +36,6 @@ public class GlobalHooks {
         if (scenario.isFailed()){
             AllureLogger.saveTextLog("Saved screenshot for failed step: " + scenario.getName());
             AllureLogger.saveScreenshotPNG(threadedDriver.get());
-
         }
     }
 
@@ -49,30 +50,15 @@ public class GlobalHooks {
     }
 
     public void initalizeAndroidDriver(){
+        //Getting the device parameter from testNG
         String device = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("device");
+
+        //If we dont get a device name, we are defaulting for pixel for now
         if (device == null){
             device = "pixel";
         }
-        System.out.println("Device is: " + device);
-        DesiredCapabilities capabilities;
-        if (device.equals("pixel")){
-            capabilities = getPixelCapabilities();
 
-//            try {
-//                driver = new AndroidDriver<>(new URL("http://0.0.0.0:4755/wd/hub"), capabilities);
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-        } else {
-            capabilities = getNexusCapabilities();
-
-//            try {
-//                driver = new AndroidDriver<>(new URL("http://0.0.0.0:4728/wd/hub"), capabilities);
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-        }
-
+        initalizeDriverFor(device);
     }
 
     @Step("Navigating back using android system's back button")
@@ -80,42 +66,23 @@ public class GlobalHooks {
         threadedDriver.get().navigate().back();
     }
 
+    public void initalizeDriverFor(String device){
+        Properties properties = PropertyFileLoader.loadDeviceProperty(device);
 
-    public DesiredCapabilities getPixelCapabilities(){
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.APP,app.getAbsolutePath());
-        capabilities.setCapability("deviceName","Pixel XL API 30");
-        capabilities.setCapability("udid","emulator-5554");
-        capabilities.setCapability("platformName","Android");
+        capabilities.setCapability("deviceName",properties.getProperty("deviceName"));
+        capabilities.setCapability("udid",properties.getProperty("udid"));
+        capabilities.setCapability("platformName",properties.getProperty("platformName"));
         capabilities.setCapability("appium:chromeOptions", ImmutableMap.of("w3c", false));
         capabilities.setCapability("appPackage","io.viesure.qa");
         capabilities.setCapability("appActivity","io.viesure.qa.views.MainActivity");
 
         try {
-            threadedDriver.set(new AndroidDriver<>(new URL("http://0.0.0.0:4755/wd/hub"), capabilities));
+            threadedDriver.set(new AndroidDriver<>(new URL(properties.getProperty("remoteUrl")), capabilities));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
-        return capabilities;
-    }
-
-    public DesiredCapabilities getNexusCapabilities(){
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.APP,app.getAbsolutePath());
-        capabilities.setCapability("deviceName","Nexus S API 24");
-        capabilities.setCapability("udid","emulator-5556");
-        capabilities.setCapability("platformName","Android");
-        capabilities.setCapability("appium:chromeOptions", ImmutableMap.of("w3c", false));
-        capabilities.setCapability("appPackage","io.viesure.qa");
-        capabilities.setCapability("appActivity","io.viesure.qa.views.MainActivity");
-
-        try {
-            threadedDriver.set(new AndroidDriver<>(new URL("http://0.0.0.0:4728/wd/hub"), capabilities));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        return capabilities;
     }
 
 }
