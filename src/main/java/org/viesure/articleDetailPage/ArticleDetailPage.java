@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.viesure.articleListPage.ArticleListPage;
 import org.viesure.base.BasePage;
+import org.viesure.gmailPage.GmailPage;
 
 
 public class ArticleDetailPage extends BasePage {
@@ -38,8 +39,9 @@ public class ArticleDetailPage extends BasePage {
      * Clicks on the share button
      */
     @Step("Clicking on share button")
-    public void clickShareButton(){
+    public GmailPage clickShareButton(){
         locators.shareButton.click();
+        return new GmailPage(driver);
     }
 
     public String getPageTitle(){

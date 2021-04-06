@@ -7,15 +7,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.viesure.articleDetailPage.ArticleDetailPage;
 import org.viesure.articleListPage.ArticleElement;
 import org.viesure.articleListPage.ArticleListPage;
 import org.viesure.common.Article;
+import org.viesure.gmailPage.GmailPage;
 import org.viesure.utils.AllureLogger;
 import org.viesure.utils.Gestures;
 import org.viesure.utils.Networking;
@@ -27,14 +24,13 @@ import java.util.Set;
 public class ArticleListSteps {
 
     private AndroidDriver<AndroidElement> driver;
-    private GlobalHooks globalHooks;
-    ArticleListPage articleListPage;
 
+    ArticleListPage articleListPage;
     ArticleDetailPage selectedDetailPage;
+    GmailPage gmailPage;
 
     public ArticleListSteps(GlobalHooks globalHooks){
         this.driver = globalHooks.getDriver();
-        this.globalHooks = globalHooks;
     }
 
     @Given("user opens viesure application")
@@ -212,7 +208,7 @@ public class ArticleListSteps {
                     AllureLogger.saveTextLog("Clicking on: " + article.getTitle());
 
                     ArticleDetailPage detailPage = article.clickOnArticle();
-                    detailPage.clickShareButton();
+                    gmailPage = detailPage.clickShareButton();
 
                     verifyMailData(expectedList.get(articleIndex));
 
@@ -247,28 +243,14 @@ public class ArticleListSteps {
 
     @Step("Verifying filled email data")
     private void verifyMailData(Article expectedArticle){
-        System.out.println("Testing app activity and gmail fill data");
-        Assert.assertEquals(driver.currentActivity(), ".ComposeActivityGmailExternal", "Current Activity is not compose activity");
-
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement recipient = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/to")));
-        WebElement subject = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/subject")));
-        WebElement body = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/wc_body_layout")));
+        Assert.assertEquals(gmailPage.getCurrentActivity(), ".ComposeActivityGmailExternal", "Current Activity is not compose activity");
 
         //removing "author: " here as it can be needed on other places
         String expectedRecipientText = "<" + expectedArticle.getAuthor() + ">, ";
-        Assert.assertEquals(recipient.getText(), expectedRecipientText, "Testing if actual recipient equals expected recipient");
-        Assert.assertEquals(subject.getText(), expectedArticle.getTitle(), "Testing if subject equals to the title of the article");
-        Assert.assertTrue(body.getText().isEmpty(), "Testing if email body is empty");
+        Assert.assertEquals(gmailPage.getRecipient(), expectedRecipientText, "Testing if actual recipient equals expected recipient");
+        Assert.assertEquals(gmailPage.getSubject(), expectedArticle.getTitle(), "Testing if subject equals to the title of the article");
+        Assert.assertTrue(gmailPage.getBody().isEmpty(), "Testing if email body is empty");
 
-        Set<String> contextNames = driver.getContextHandles();
-        String otherContext = (String) contextNames.toArray()[1];
-//
-//        driver.context((String) contextNames.toArray()[1]);
-//
-//        driver.closeApp();
-//        driver.context("NATIVE_APP");
-        //First one closes keyboard, second navigates back
         driver.navigate().back();
         driver.navigate().back();
     }

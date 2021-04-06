@@ -6,17 +6,16 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.viesure.articleDetailPage.ArticleDetailPage;
+import org.viesure.gmailPage.GmailPage;
 
 public class ArticleDetailSteps {
     private AndroidDriver<AndroidElement> driver;
 
     ArticleDetailPage selectedDetailPage;
+    GmailPage gmailPage;
+
     String authorEmail;
     String articleTitle;
 
@@ -30,7 +29,7 @@ public class ArticleDetailSteps {
     @When("user clicks on the share button")
     @Step("user clicks on the share button")
     public void userClicksOnTheShareButton() {
-        selectedDetailPage.clickShareButton();
+        gmailPage = selectedDetailPage.clickShareButton();
     }
 
     @Then("the app should switch to gmail")
@@ -38,7 +37,8 @@ public class ArticleDetailSteps {
     public void theAppShouldSwitchToGmail() {
         String welcomeTourActivity = ".welcome.WelcomeTourActivity";
         String composeActivity = ".ComposeActivityGmailExternal";
-        String currentActivity = driver.currentActivity();
+
+        String currentActivity = gmailPage.getCurrentActivity();
 
         Assert.assertTrue( currentActivity.equals(welcomeTourActivity)|| currentActivity.equals(composeActivity));
     }
@@ -53,23 +53,21 @@ public class ArticleDetailSteps {
     @And("the recipient and subject fields are filled")
     @Step("the recipient and subject fields are filled")
     public void theRecipientAndSubjectFieldsAreFilled() {
-        Assert.assertEquals(driver.currentActivity(), ".ComposeActivityGmailExternal", "User is not in compose email activity.");
 
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement recipient = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/to")));
-        WebElement subject = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/subject")));
-        WebElement body = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/wc_body_layout")));
+        Assert.assertEquals(gmailPage.getCurrentActivity(), ".ComposeActivityGmailExternal", "User is not in compose email activity.");
 
         //removing "author: " here as it can be needed on other places
         String expectedRecipientText = "<" + authorEmail.replace("author: ", "") + ">, ";
-        Assert.assertEquals(recipient.getText(), expectedRecipientText, "Testing if actual recipient equals expected recipient");
-        Assert.assertEquals(subject.getText(), articleTitle, "Testing if subject equals to the title of the article");
-        Assert.assertTrue(body.getText().isEmpty(), "Testing if email body is empty");
+        Assert.assertEquals(gmailPage.getRecipient(), expectedRecipientText, "Testing if actual recipient equals expected recipient");
+        Assert.assertEquals(gmailPage.getSubject(), articleTitle, "Testing if subject equals to the title of the article");
+        Assert.assertTrue(gmailPage.getBody().isEmpty(), "Testing if email body is empty");
     }
 
 
     @And("user navigates back to viesure application")
     public void userNavigatesBackToViesureApplication() {
+        //First one closes the keyboard, second navigates back
+        driver.navigate().back();
         driver.navigate().back();
     }
 }

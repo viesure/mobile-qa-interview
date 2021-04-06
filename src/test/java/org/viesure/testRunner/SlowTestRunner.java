@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeClass;
 @CucumberOptions(
         features = {"src/main/resources/pages"},
         glue = "steps",
-        tags = "@gmailLoggedIn"
+        tags = "@slow"
 )
 public class SlowTestRunner extends AbstractTestNGCucumberTests {
 

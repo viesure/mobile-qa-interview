@@ -7,14 +7,14 @@
     <test name="Article Test">
         <parameter name="device" value="pixel"/>
         <classes>
-            <class name="org.viesure.testRunner.ArticleTestRunner" />
+            <class name="org.viesure.testRunner.RegressionTestRunner" />
         </classes>
     </test>
 
     <test name="Showcase Test">
         <parameter name="device" value="nexus"/>
         <classes>
-            <class name="org.viesure.testRunner.ShowcaseTestRunner" />
+            <class name="org.viesure.testRunner.RegressionTestRunner" />
         </classes>
     </test>
 

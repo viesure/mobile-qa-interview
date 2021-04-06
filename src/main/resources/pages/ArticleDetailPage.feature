@@ -17,7 +17,7 @@ Feature: Article Detail page features
       | title                       |
       | Sharable maximized analyzer |
       | Focused mobile alliance     |
-      | Realigned multimedia framework|
+      | Realigned multimedia framework |
 
     @regression @gmailLoggedIn
     Scenario: Sharing the article fills the recipient and address fields in the gmail application
@@ -27,4 +27,5 @@ Feature: Article Detail page features
     And user clicks on the share button
     Then the app should switch to gmail
     And the recipient and subject fields are filled
+    And user navigates back to viesure application
 
