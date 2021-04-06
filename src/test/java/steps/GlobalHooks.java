@@ -45,20 +45,12 @@ public class GlobalHooks {
         threadedDriver.get().quit();
     }
 
+    /**
+     * Returns the current thread's driver
+     * @return the driver
+     */
     public AndroidDriver<AndroidElement> getDriver(){
         return threadedDriver.get();
-    }
-
-    public void initalizeAndroidDriver(){
-        //Getting the device parameter from testNG
-        String device = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("device");
-
-        //If we dont get a device name, we are defaulting for pixel for now
-        if (device == null){
-            device = "pixel";
-        }
-
-        initalizeDriverFor(device);
     }
 
     @Step("Navigating back using android system's back button")
@@ -66,17 +58,30 @@ public class GlobalHooks {
         threadedDriver.get().navigate().back();
     }
 
-    public void initalizeDriverFor(String device){
+    private void initalizeAndroidDriver(){
+        //Getting the device parameter from testNG
+        String device = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("device");
+
+        //If we dont get a device name for some reason, we are defaulting for pixel for now
+        if (device == null){
+            device = "pixel";
+        }
+
+        initalizeDriverFor(device);
+    }
+
+    private void initalizeDriverFor(String device){
         Properties properties = PropertyFileLoader.loadDeviceProperty(device);
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
+        //Common capabilities
         capabilities.setCapability(MobileCapabilityType.APP,app.getAbsolutePath());
+        capabilities.setCapability("appPackage","io.viesure.qa");
+        capabilities.setCapability("appActivity","io.viesure.qa.views.MainActivity");
+        //Capabilities from the property file
         capabilities.setCapability("deviceName",properties.getProperty("deviceName"));
         capabilities.setCapability("udid",properties.getProperty("udid"));
         capabilities.setCapability("platformName",properties.getProperty("platformName"));
-        capabilities.setCapability("appium:chromeOptions", ImmutableMap.of("w3c", false));
-        capabilities.setCapability("appPackage","io.viesure.qa");
-        capabilities.setCapability("appActivity","io.viesure.qa.views.MainActivity");
 
         try {
             threadedDriver.set(new AndroidDriver<>(new URL(properties.getProperty("remoteUrl")), capabilities));

@@ -24,12 +24,19 @@ public class ArticleDetailPage extends BasePage {
         locators = new ArticleDetailPageLocators(driver);
     }
 
+    /**
+     * Clicks on the top back button
+     * @return the ArticleListPage
+     */
     @Step("Clicking on top back button")
     public ArticleListPage clickBackButton(){
         locators.backButton.click();
         return new ArticleListPage(driver);
     }
 
+    /**
+     * Clicks on the share button
+     */
     @Step("Clicking on share button")
     public void clickShareButton(){
         locators.shareButton.click();
@@ -51,6 +58,10 @@ public class ArticleDetailPage extends BasePage {
         return locators.articleDescription.getText();
     }
 
+    /**
+     * Returns the author as shown on the ui
+     * @return the author
+     */
     @Step("Trying to get author of the detail page")
     public String getAuthor(){
         MobileElement element = driver.findElement(MobileBy.AndroidUIAutomator(
@@ -59,6 +70,10 @@ public class ArticleDetailPage extends BasePage {
         return element.getText();
     }
 
+    /**
+     * Returns only the email part of the author
+     * @return the email of the author
+     */
     public String getAuthorEmail(){
         return getAuthor().replace("author: ", "");
     }

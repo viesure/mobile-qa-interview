@@ -13,6 +13,10 @@ import java.time.Duration;
 
 public class Gestures {
 
+    /**
+     * Scrolls down on any page
+     * @param driver the driver of the page
+     */
     public static void scrollDown(AndroidDriver<AndroidElement> driver){
         //The viewing size of the device
         Dimension size = driver.manage().window().getSize();
@@ -29,6 +33,10 @@ public class Gestures {
         (new TouchAction<>(driver)).press(PointOption.point(width, startPoint)).waitAction(WaitOptions.waitOptions(Duration.ofMillis(2000))).moveTo(PointOption.point(width, endPoint)).release().perform();
     }
 
+    /**
+     * Scrolls up on any page
+     * @param driver the driver of the page
+     */
     public static void scrollUp(AndroidDriver<AndroidElement> driver){
         //The viewing size of the device
         Dimension size = driver.manage().window().getSize();

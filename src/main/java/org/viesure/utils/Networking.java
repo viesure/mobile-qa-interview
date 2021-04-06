@@ -15,6 +15,18 @@ public class Networking {
 
     static String dataURL = "https://run.mocky.io/v3/de42e6d9-2d03-40e2-a426-8953c7c94fb8";
 
+    /**
+     * Gets the dummy data from the backend as a List of Articles
+     * @return the article list
+     */
+    public static List<Article> getDummyData(){
+        return parseResponse(getRequest());
+    }
+
+    /**
+     * Makes a GET request to the dummy backend
+     * @return the response object of the request
+     */
     private static Response getRequest(){
         RequestSpecification requestSpecification = RestAssured.given();
         requestSpecification.contentType(ContentType.JSON);
@@ -22,10 +34,11 @@ public class Networking {
         return requestSpecification.relaxedHTTPSValidation().get(dataURL);
     }
 
-    public static List<Article> getDummyData(){
-        return parseResponse(getRequest());
-    }
-
+    /**
+     * Parses a response into a list of articles
+     * @param response the response to be parsed
+     * @return the parsed list of articles
+     */
     private static List<Article> parseResponse(Response response){
         List<Article> responseArticles;
 

@@ -21,6 +21,10 @@ public class ArticleElement implements Comparable<ArticleElement>{
         initProperties();
     }
 
+    /**
+     * Splits the text shown on the UI
+     * into title, author and release date
+     */
     public void initProperties(){
         String elementText= element.getText();
         String[] split = elementText.split(",");
@@ -33,10 +37,18 @@ public class ArticleElement implements Comparable<ArticleElement>{
         return title;
     }
 
+    /**
+     * Returns the author text as shown on the UI
+     * @return the Author text
+     */
     public String getAuthor() {
         return author;
     }
 
+    /**
+     * Returns only the email part of the author
+     * @return the author email
+     */
     public String getAuthorEmail() {
         return author.replace("author:","").trim();
     }
@@ -45,10 +57,19 @@ public class ArticleElement implements Comparable<ArticleElement>{
         return release_date;
     }
 
+    /**
+     * Returns the raw webelement of the article
+     * @return article WebElement
+     */
     public WebElement getElement() {
         return element;
     }
 
+    /**
+     * Clicks on the article and gets navigated to the
+     * Article Detail page
+     * @return the navigated ArticleDetailPage
+     */
     public ArticleDetailPage clickOnArticle(){
         this.element.click();
         return new ArticleDetailPage(driver);

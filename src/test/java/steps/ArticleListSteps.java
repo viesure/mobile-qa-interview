@@ -22,6 +22,7 @@ import org.viesure.utils.Networking;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ArticleListSteps {
 
@@ -70,13 +71,13 @@ public class ArticleListSteps {
     @When("user scrolls to the bottom")
     @Step("user scrolls to the bottom")
     public void userScrollsToTheBottom() {
-        articleListPage.scrollUntilBottomOfPage();
+        articleListPage.scrollToBottom();
     }
 
     @When("user scrolls to the top")
     @Step("user scrolls to the top")
     public void userScrollsToTheTop() {
-        articleListPage.scrollUntilTopOfPage();
+        articleListPage.scrollToTop();
     }
 
     @Then("user can see the articles list")
@@ -260,8 +261,8 @@ public class ArticleListSteps {
         Assert.assertEquals(subject.getText(), expectedArticle.getTitle(), "Testing if subject equals to the title of the article");
         Assert.assertTrue(body.getText().isEmpty(), "Testing if email body is empty");
 
-//        Set<String> contextNames = driver.getContextHandles();
-//        String otherContext = (String) contextNames.toArray()[1];
+        Set<String> contextNames = driver.getContextHandles();
+        String otherContext = (String) contextNames.toArray()[1];
 //
 //        driver.context((String) contextNames.toArray()[1]);
 //
