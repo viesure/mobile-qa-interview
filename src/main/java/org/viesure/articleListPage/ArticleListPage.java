@@ -39,7 +39,6 @@ public class ArticleListPage extends BasePage {
     /**
      * Waits until there are at least 1 article loaded and is visible
      */
-    @Step("Waiting until List page is populated")
     private void waitUntilPageIsPopulated(){
         WebDriverWait wait = new WebDriverWait(this.driver, 10);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//android.view.ViewGroup/android.view.View/android.view.View"),1));

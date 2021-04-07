@@ -21,29 +21,21 @@ public class GmailPage extends BasePage {
     public GmailPage(AndroidDriver<AndroidElement> driver){
         super(driver);
 
-        String currentActivity = driver.currentActivity();
-        if (driver.currentActivity().equals(".ComposeActivityGmailExternal")){
+        if (driver.currentActivity().equals(".ComposeActivityGmailExternal")||driver.currentActivity().equals(".ComposeActivityGmail")){
             composeMode = true;
 
             WebDriverWait wait = new WebDriverWait(driver,10);
             recipient = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/to")));
             subject = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/subject")));
-            body = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/wc_body_layout")));
+            body = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.google.android.gm:id/body_wrapper")));
         } else {
             composeMode = false;
         }
     }
 
-    /**
-     * Tells if the gmail page is in compose mode or not
-     * @return true if the page is in compose mode, false if its in eg.: welcome mode
-     */
-    public boolean inComposeMode(){
-        return composeMode;
-    }
 
     /**
-     * Returns the current activity
+     * Returns the current gmail activity
      * @return the activity string
      */
     public String getCurrentActivity(){
