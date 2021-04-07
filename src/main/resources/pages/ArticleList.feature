@@ -54,5 +54,6 @@ Feature: Article list page scenarios
   Scenario: Every shared article fills the recipient and subject correctly
     Then every shared article fills mail correctly
 
-#  Scenario: All list items are clickable
-#    Then user can click on every list item
+  @regression @backend
+  Scenario: Same data shown on the list as it's coming from the server
+    Then every article from backend are displayed

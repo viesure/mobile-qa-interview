@@ -6,11 +6,13 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.viesure.articleListPage.ArticleListPage;
 import org.viesure.base.BasePage;
 import org.viesure.gmailPage.GmailPage;
+import org.viesure.utils.Gestures;
 
 
 public class ArticleDetailPage extends BasePage {
@@ -29,7 +31,6 @@ public class ArticleDetailPage extends BasePage {
      * Clicks on the top back button
      * @return the ArticleListPage
      */
-    @Step("Clicking on top back button")
     public ArticleListPage clickBackButton(){
         locators.backButton.click();
         return new ArticleListPage(driver);
@@ -66,9 +67,19 @@ public class ArticleDetailPage extends BasePage {
      */
     @Step("Trying to get author of the detail page")
     public String getAuthor(){
-        MobileElement element = driver.findElement(MobileBy.AndroidUIAutomator(
-                "new UiScrollable(new UiSelector().scrollable(true))" +
-                        ".scrollIntoView(new UiSelector().textContains(\"author\"))"));
+        MobileElement element;
+        try{
+                element = driver.findElement(MobileBy.AndroidUIAutomator(
+                    "new UiScrollable(new UiSelector().scrollable(true))" +
+                            ".scrollIntoView(new UiSelector().textContains(\"author\"))"));
+        } catch (NoSuchElementException ex){
+            //If it fails try once more with a manual scrolldown
+            Gestures.scrollDown(driver);
+            element = driver.findElement(MobileBy.AndroidUIAutomator(
+                    "new UiScrollable(new UiSelector().scrollable(true))" +
+                            ".scrollIntoView(new UiSelector().textContains(\"author\"))"));
+        }
+
         return element.getText();
     }
 

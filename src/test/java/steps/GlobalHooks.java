@@ -1,6 +1,5 @@
 package steps;
 
-import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -12,7 +11,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Reporter;
 import org.viesure.utils.AllureLogger;
-import org.viesure.utils.PropertyFileLoader;
+import org.viesure.utils.FileUtil;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -28,6 +27,8 @@ public class GlobalHooks {
     @Before(order = 0)
     @Step("Initalizing Android driver")
     public void setUp(){
+        //Moving Allure history
+        FileUtil.moveAllureReportHistory();
         initalizeAndroidDriver();
     }
 
@@ -71,7 +72,7 @@ public class GlobalHooks {
     }
 
     private void initalizeDriverFor(String device){
-        Properties properties = PropertyFileLoader.loadDeviceProperty(device);
+        Properties properties = FileUtil.loadDeviceProperty(device);
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         //Common capabilities

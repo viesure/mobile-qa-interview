@@ -32,7 +32,6 @@ public class ArticleListPage extends BasePage {
      * Returns the articles that are currently visible on the UI
      * @return The list of visible articles
      */
-    @Step("Getting list of currently visible articles")
     public List<ArticleElement> getVisibleArticles(){
         return generateVisibleArticleList();
     }
