@@ -15,7 +15,8 @@
 ## The assignment
 
 ### prologue
-Running the tests (on remote selenium grid) requires a selenium hub and node configured. 
+Running the tests (on remote selenium grid) requires a selenium hub and nodes 
+configured and running the emulators (or real devices). 
 I had both the hub and the 2 nodes I used configured on my local machine, 
 although having it run on a remote machine differs only in the URL used to initalize the drivers.
 
