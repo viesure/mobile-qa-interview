@@ -40,16 +40,22 @@ When we start running our tests `paralellTestng.xml`, through maven the followin
 The maven-surefire-plugin, will execute the file that is given to it inside the `<suiteXmlFile>` tags. here, 
 I did not set any other parameters ( like run paralell or threadCount). 
 these are set inside the `paralellTestng.xml` file (so there's no conflict).
+
+`paralellTestng.xml` curretnly has 2 tests that will run paralelly, each test starts 
+the `RegressionTestRunner.java` file with different device parameters.
+
 For the cucumber tests, I have set up global hooks in `GlobalHooks.java` 
-and the code execution will start in the @Before method called setUp.
+and the code execution will start in the `@Before` method called setUp.
 This method moves the Allure report history, into the results folder,
 and also initalizes my drivers. The drivers are being initalized by the given device parameter in `paralellTestng.xml`
 (also if the parameter happens to be missing for some reason, the code defaults to 'pixel' ).
+
 After getting the device parameter or the default device, based on the parameter 
 a property file will be loaded with that device's data and used for the capabilities, and setting up the remote URL.
 
 When this is done, the execution moves to execute the runner(s) defined in `paralellTestng.xml`. 
-The current runner is the `RegressionTestRunner.java` that runs scenarions tagged with @regression
+The current runner is the `RegressionTestRunner.java` that runs 
+scenarions tagged with `@regression`
 
 #### Cucumber
 
@@ -155,6 +161,31 @@ the article list's created date is often not visible ( so a ticket could be crea
 * Shows the regression test list for the pixel emulator
 
 ![Launcher screen](./resources/regression_on_pixel.png)
+
+### Future improvements
+
+With more time, the code and testbase of course could be improved.
+
+* In TDD, After a test finally runs comes the refactor part, to make the tests better, and still 
+having the same functionality. Some of my code still needs some refactoring 
+  ( Tests that test/use the whole list of articles could be improved a lot)
+  
+* A better way of handling Gmail application could be used
+  * For example, having a dedicated account for the tests, 
+    and if we dont get navigated to the compose activity, then we would try to log in to gmail
+    
+  * The 2 factor authentication would be resulved by attaching an authenticator application
+  to the gmail account. then we would get a secret token, and with that we can generate
+  the 2 factor code to log in.
+    
+Of course if it's a production app to be tested, I would also ask some development support
+for better element locators (eg.: a few items could have accessibiltiy id-s).
+
+Also it was interesting to see that somehow the title of the page was in the same level
+of the hierarchy as the articles, but I also guess it was for the sake of the test app intentional :)
+
+
+## Thank you for your time!
 
 
 
